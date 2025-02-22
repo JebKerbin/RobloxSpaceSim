@@ -1,6 +1,12 @@
 {
+<<<<<<< HEAD
   "name": "workspace",
   "version": "1.0.0",
+=======
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "",
+>>>>>>> 3023acab65f83a671491e35d16ae393aa4b5e9f8
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -8,5 +14,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+<<<<<<< HEAD
   "description": ""
+=======
+  "dependencies": {
+    "@types/node": "^18.0.6"
+  }
+>>>>>>> 3023acab65f83a671491e35d16ae393aa4b5e9f8
 }
