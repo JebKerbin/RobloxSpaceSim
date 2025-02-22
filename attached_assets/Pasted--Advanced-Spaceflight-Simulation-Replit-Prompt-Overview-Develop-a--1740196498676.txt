@@ -1,0 +1,172 @@
+### **🚀 Advanced Spaceflight Simulation - Replit Prompt**  
+
+#### **🌌 Overview:**  
+Develop a **Kerbal Space Program-inspired** space simulation within **Roblox**, coded entirely in **Replit**. The game should feature:  
+✅ **Kerbin’s 2D gravity (large, flat world with vertical launches)**  
+✅ **3D planetary gravity (pivoted walking & realistic orbital mechanics)**  
+✅ **Outer space physics (Newtonian motion & decreasing gravity effect)**  
+✅ **Fully modular rockets (thrust, drag, weight physics)**  
+✅ **Autopilot & Navigation UI for interplanetary transfers**  
+✅ **Real-time space map to visualize planetary positions & trajectory planning**  
+✅ **Space station deployment & docking system**  
+✅ **Dynamic weather effects on planets (storms, wind, cloud cover)**  
+✅ **Asteroid fields with hazardous debris collisions**  
+✅ **Mission-based career mode with research unlocks**  
+
+---
+
+## **🌍 Planetary System & Gravity Mechanics**  
+
+🟢 **Kerbin (2D Gravity) - `KerbinGravity`**  
+- **Flat world of 16,384 x 16,384 studs** (largest playable area).  
+- **Constant 9.81 m/s² downward force** (no 3D orbital physics).  
+- **Atmosphere with drag & reentry heat simulation**.  
+
+🟣 **Planets (3D Gravity) - `PlanetGravity`**  
+- **3D planets use Roblox pivoted walking** (Super Mario Galaxy-style).  
+- Gravity follows an **inverse-square law** (decreases with distance).  
+- Players can **land, walk, and take off** based on escape velocity.  
+- **Atmospheres affect drag, reentry, and fuel efficiency**.  
+- **Realistic planet scaling based on KSP values (adjusted for Roblox limits)**:  
+
+| Planet Name | KSP Equivalent | Size (Studs) | Gravity (m/s²) | Notes |  
+|------------|--------------|--------------|----------------|-------|  
+| **Kerbin** | Kerbin | **16,384 (2D)** | 9.81 | Flat world |  
+| **Mun** | Mun | 512 | 1.63 | No atmosphere |  
+| **Minmus** | Minmus | 256 | 0.49 | Low gravity |  
+| **Duna** | Mars | 1,024 | 2.94 | Thin atmosphere, dust storms |  
+| **Eve** | Venus | 2,048 | 16.7 | Thick atmosphere, hardest return |  
+| **Jool** | Jupiter | 2,048 | 7.85 | Gas giant, no surface |  
+| **Laythe** | Europa | 512 | 5.82 | Water planet, oxygen atmosphere |  
+
+⚫ **Outer Space (Zero Gravity) - `OrbitSystem`**  
+- Newtonian motion applies in **zero-gravity space**.  
+- **Orbital mechanics allow for real trajectory calculations**.  
+- Drag **only applies inside atmospheres**.  
+
+---
+
+## **🚀 Rocket Building & Flight Mechanics**  
+
+🛠 **Modular Rocket Assembly - `RocketBuilder`, `RocketStaging`, `RocketAssembly`**  
+- Players build rockets using parts from **`ReplicatedStorage.RocketPieces`**.  
+- Each part has **weight, affecting thrust, fuel efficiency, and drag**.  
+- **Engines have:**
+  - **Thrust-to-weight ratio** changes based on altitude.  
+  - **Fuel consumption scales with throttle level.**  
+  - **Overheat threshold** leads to engine failure or explosion.  
+
+🎯 **Staging System - `RocketStaging`**  
+- Players define **multi-stage rockets**.  
+- **Decouplers & fairings separate sections mid-flight**.  
+- Stages can be **triggered manually or automatically**.  
+
+🔥 **Reentry & Heat Mechanics - `ReentrySystem`**  
+- High-speed reentry **generates heat**, requiring heat shields.  
+- **Parachutes deploy based on altitude & velocity**.  
+
+🛸 **Docking & Space Stations - `SpaceStationSystem`**  
+- Players can **launch & construct modular space stations**.  
+- Docking ports allow for **multiple modules to connect**.  
+
+---
+
+## **🌌 Career Mode & Mission System**  
+
+🟠 **Mission Types - `MissionControlUI`**  
+- **Contract-based missions:**  
+  - Achieve orbit, deploy satellites.  
+  - Land on Mun, Duna, Eve, etc.  
+  - Perform **science experiments** for research.  
+  - **Resupply space stations** or rescue stranded kerbonauts.  
+  - **Asteroid deflection missions** (capture, redirect, or destroy).  
+
+📈 **Research Progression - `ResearchManager`**  
+- Unlocks **new engines, landing gear, science modules**.  
+- Science points are **earned by exploration & experiments**.  
+
+🏆 **Achievements & Multiplayer Support - `AchievementsManager`, `MultiplayerManager`**  
+- **Milestones include first orbit, first landing, interplanetary travel, etc.**  
+- **Multiplayer co-op missions for building space stations**.  
+
+---
+
+## **🗺 UI & Navigation Systems**  
+
+🛠 **Space Map & Freecam - `RocketUI`**  
+- Real-time **space map UI with planetary positions**.  
+- Players can **zoom in/out** and plan trajectories.  
+- **Maneuver node system** to predict future orbits.  
+
+🧭 **Autopilot & Flight Planning - `AutopilotSystem`**  
+- Orbital insertion & intercept autopilot.  
+- **Docking assist mode** for precision movements.  
+- **Maneuver nodes** allow adjusting trajectory mid-flight.  
+
+---
+
+## **☄ Environmental Hazards & Weather System**  
+
+💀 **Asteroids & Space Debris - `EnvironmentalHazards`**  
+- **Floating asteroids in planetary orbits**.  
+- Some move **slowly**, others **fast enough to damage ships**.  
+- **Capture missions** require redirecting asteroids.  
+
+🌪 **Weather Effects on Planets**  
+- **Kerbin:** Wind, clouds, and occasional rain affecting flight.  
+- **Duna:** Dust storms using **orange smoke**, reducing visibility.  
+- **Eve:** **Thick atmosphere with strong winds**, making landing difficult.  
+
+---
+
+## **💾 Final Summary & Development Roadmap**  
+
+🌍 **Planetary System**  
+✅ **2D Kerbin (16,384x16,384 studs)**  
+✅ **3D Planets (max 2,048 studs, real KSP values scaled)**  
+✅ **Gravity & orbital mechanics**  
+
+🚀 **Rocket Physics & Flight**  
+✅ **Modular construction with physics-based drag & weight**  
+✅ **Staging system for multi-step launches**  
+✅ **Fuel consumption, docking, space station construction**  
+
+🎯 **Missions & Career Progression**  
+✅ **Contract system with randomized objectives**  
+✅ **Research & tech unlocks**  
+✅ **Achievements & multiplayer support**  
+
+🗺 **Navigation & UI**  
+✅ **Space map with real-time planet positions**  
+✅ **Autopilot & trajectory plotting**  
+
+☄ **Environmental Hazards**  
+✅ **Asteroid collisions, debris fields**  
+✅ **Weather systems on planets**  
+
+---
+
+### **📌 Instructions for Replit Development:**  
+
+1️⃣ **Setup Roblox Studio & Replit Integration**  
+- Create a **Roblox Studio project**.  
+- Set up **GitHub repo** & link it to **Replit**.  
+- Use **Rojo for syncing scripts** between Replit & Roblox.  
+
+2️⃣ **Core Modules to Code in Replit**  
+- `KerbinGravity.lua` (Handles 2D physics)  
+- `PlanetGravity.lua` (3D physics, pivot walking)  
+- `OrbitSystem.lua` (Real-time orbital physics)  
+- `RocketBuilder.lua` (UI & rocket construction logic)  
+- `LaunchMechanics.lua` (Thrust, drag, overheat, etc.)  
+- `ReentrySystem.lua` (Heat shield logic)  
+- `MissionControlUI.lua` (Mission tracking)  
+- `SpaceMap.lua` (Real-time planet positions)  
+- `EnvironmentalHazards.lua` (Asteroid physics, storms)  
+
+3️⃣ **Testing & Debugging**  
+- Implement **log-based debugging** in Replit.  
+- Use **print statements** & `warn()` for tracking calculations.  
+- **Run tests for each module individually**.  
+
+This prompt will guide **GitHub Copilot on Replit** to create a **realistic KSP-inspired space sim** in Roblox. Let me know if you need tweaks! 🚀
