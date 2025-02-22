@@ -1,18 +1,13 @@
-<<<<<<< HEAD
-modules = ["nodejs-20"]
-=======
-entrypoint = "index.js"
-modules = ["nodejs-20"]
-hidden = [".config", "package-lock.json"]
-
-[gitHubImport]
-requiredFiles = [".replit", "replit.nix", "package.json", "package-lock.json"]
->>>>>>> 3023acab65f83a671491e35d16ae393aa4b5e9f8
+run = "bash setup_rojo.sh"
+modules = ["nodejs-20", "python-3.11"]
 
 [nix]
-channel = "stable-24_05"
+channel = "stable-22_11"
 
-<<<<<<< HEAD
+[deployment]
+run = ["sh", "-c", "bash setup_rojo.sh"]
+deploymentTarget = "cloudrun"
+
 [workflows]
 runButton = "Project"
 
@@ -37,17 +32,5 @@ task = "packager.installForAll"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npx rojo serve"
+args = "bash setup_rojo.sh"
 waitForPort = 34872
-
-[deployment]
-run = ["sh", "-c", "npx rojo serve"]
-=======
-[unitTest]
-language = "nodejs"
-
-[deployment]
-run = ["node", "index.js"]
-deploymentTarget = "cloudrun"
-ignorePorts = false
->>>>>>> 3023acab65f83a671491e35d16ae393aa4b5e9f8

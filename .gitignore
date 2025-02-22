@@ -131,3 +131,33 @@ dist
 
 # Replit debugger
 .breakpoints
+
+# Roblox Studio/Rojo specific
+*.rbxl
+*.rbxlx
+*.rbxm
+*.rbxmx
+*.rbxl.lock
+*.rbxlx.lock
+/build/
+
+# Rojo binary
+/rojo
+rojo.zip
+
+# Node modules and logs
+node_modules/
+*.log
+npm-debug.log*
+
+# Replit specific
+.breakpoints
+.replit
+replit.nix
+.config/
+.upm/
+.cache/
+
+# Environment variables
+.env
+.env.local
