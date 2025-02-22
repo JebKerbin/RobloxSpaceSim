@@ -1,0 +1,24 @@
+{
+  "name": "SpaceSimProject",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "Scripts": {
+        "$path": "src/ReplicatedStorage"
+      }
+    },
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "Scripts": {
+        "$path": "src/ServerScriptService"
+      }
+    },
+    "StarterPlayerScripts": {
+      "$className": "StarterPlayerScripts",
+      "Scripts": {
+        "$path": "src/StarterPlayerScripts"
+      }
+    }
+  }
+}
