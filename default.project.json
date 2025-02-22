@@ -1,6 +1,88 @@
 {
+<<<<<<< HEAD
     "name": "RobloxSpaceSim",
     "tree": {
         "$className": "DataModel"
     }
+=======
+  "name": "KSP-Inspired-Game",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "Modules": {
+        "$className": "Folder",
+        "Physics": {
+          "$className": "Folder",
+          "KerbinGravity": {
+            "$path": "src/shared/KerbinGravity.lua"
+          },
+          "OrbitSystem": {
+            "$path": "src/shared/OrbitSystem.lua"
+          },
+          "PhysicsConstants": {
+            "$path": "src/shared/PhysicsConstants.lua"
+          }
+        },
+        "Rocket": {
+          "$className": "Folder",
+          "RocketBuilder": {
+            "$path": "src/shared/RocketBuilder.lua"
+          },
+          "RocketParts": {
+            "$path": "src/shared/RocketParts.lua"
+          },
+          "LaunchMechanics": {
+            "$path": "src/shared/LaunchMechanics.lua"
+          },
+          "ReentrySystem": {
+            "$path": "src/shared/ReentrySystem.lua"
+          }
+        },
+        "Environment": {
+          "$className": "Folder",
+          "WeatherSystem": {
+            "$path": "src/shared/WeatherSystem.lua"
+          },
+          "EnvironmentalHazards": {
+            "$path": "src/shared/EnvironmentalHazards.lua"
+          }
+        }
+      },
+      "Remotes": {
+        "$className": "Folder",
+        "Events": {
+          "$className": "Folder"
+        }
+      }
+    },
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+        "Client": {
+          "$className": "Folder",
+          "UI": {
+            "$className": "Folder",
+            "MissionControlUI": {
+              "$path": "src/client/MissionControlUI.lua"
+            }
+          }
+        }
+      }
+    },
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "Server": {
+        "$className": "Folder",
+        "init": {
+          "$path": "src/server/init.lua"
+        },
+        "ServerRunner": {
+          "$path": "src/server/ServerRunner.lua"
+        }
+      }
+    }
+  }
+>>>>>>> 3934bb5daa15cb312a82f325f08aa26b22f2e0ba
 }
