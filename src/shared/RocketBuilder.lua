@@ -1,6 +1,6 @@
 local RocketBuilder = {}
 
-local RocketParts = require(script.Parent.RocketParts)
+local RocketParts = require(game:GetService("ReplicatedStorage").Modules.Rocket.RocketParts)
 
 function RocketBuilder.new()
     local self = {}

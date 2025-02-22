@@ -1,6 +1,6 @@
 local OrbitSystem = {}
 
-local PhysicsConstants = require(script.Parent.PhysicsConstants)
+local PhysicsConstants = require(game:GetService("ReplicatedStorage").Modules.Physics.PhysicsConstants)
 
 -- Orbital parameters
 local function calculateOrbitalVelocity(altitude, mass)

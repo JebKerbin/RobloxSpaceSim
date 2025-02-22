@@ -4,8 +4,50 @@
     "$className": "DataModel",
     "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
-      "Shared": {
-        "$path": "src/shared"
+      "Modules": {
+        "$className": "Folder",
+        "Physics": {
+          "$className": "Folder",
+          "KerbinGravity": {
+            "$path": "src/shared/KerbinGravity.lua"
+          },
+          "OrbitSystem": {
+            "$path": "src/shared/OrbitSystem.lua"
+          },
+          "PhysicsConstants": {
+            "$path": "src/shared/PhysicsConstants.lua"
+          }
+        },
+        "Rocket": {
+          "$className": "Folder",
+          "RocketBuilder": {
+            "$path": "src/shared/RocketBuilder.lua"
+          },
+          "RocketParts": {
+            "$path": "src/shared/RocketParts.lua"
+          },
+          "LaunchMechanics": {
+            "$path": "src/shared/LaunchMechanics.lua"
+          },
+          "ReentrySystem": {
+            "$path": "src/shared/ReentrySystem.lua"
+          }
+        },
+        "Environment": {
+          "$className": "Folder",
+          "WeatherSystem": {
+            "$path": "src/shared/WeatherSystem.lua"
+          },
+          "EnvironmentalHazards": {
+            "$path": "src/shared/EnvironmentalHazards.lua"
+          }
+        }
+      },
+      "Remotes": {
+        "$className": "Folder",
+        "Events": {
+          "$className": "Folder"
+        }
       }
     },
     "StarterPlayer": {
@@ -13,7 +55,25 @@
       "StarterPlayerScripts": {
         "$className": "StarterPlayerScripts",
         "Client": {
-          "$path": "src/client"
+          "$className": "Folder",
+          "UI": {
+            "$className": "Folder",
+            "MissionControlUI": {
+              "$path": "src/client/MissionControlUI.lua"
+            }
+          }
+        }
+      }
+    },
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "Server": {
+        "$className": "Folder",
+        "init": {
+          "$path": "src/server/init.lua"
+        },
+        "ServerRunner": {
+          "$path": "src/server/ServerRunner.lua"
         }
       }
     }
