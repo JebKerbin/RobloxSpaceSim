@@ -3,6 +3,9 @@ local LaunchMechanics = {}
 local PhysicsConstants = require(game:GetService("ReplicatedStorage").Modules.Physics.PhysicsConstants)
 local WeatherSystem = require(game:GetService("ReplicatedStorage").Modules.Environment.WeatherSystem)
 
+-- Get RemoteEvents
+local Events = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Events")
+
 -- Constants for engine performance
 local ENGINE_CONSTANTS = {
     ATMOSPHERE_CURVE = {
@@ -20,7 +23,7 @@ function LaunchMechanics.new(rocket)
     self.currentStage = 1
     self.engineTemp = 293 -- Start at room temperature (20°C)
     self.throttle = 0
-    
+
     -- Initialize stage configuration
     self.stages = {}
     for _, part in ipairs(rocket.parts) do
@@ -33,7 +36,7 @@ function LaunchMechanics.new(rocket)
                     fuelTanks = {},
                     decouplers = {}
                 }
-                
+
                 if config:FindFirstChild("thrust") then
                     table.insert(self.stages[stageNum].engines, part)
                 elseif config:FindFirstChild("fuelCapacity") then
@@ -44,17 +47,17 @@ function LaunchMechanics.new(rocket)
             end
         end
     end
-    
+
     function self:calculateAtmosphericDensity(altitude)
         local pressure = PhysicsConstants.SEA_LEVEL_PRESSURE * 
             math.exp(-altitude / PhysicsConstants.ATM_SCALE_HEIGHT)
         return pressure / PhysicsConstants.SEA_LEVEL_PRESSURE
     end
-    
+
     function self:calculateThrust(engine, atmosphericDensity)
         local config = engine.Configuration
         local baseThrust = config.thrust.Value
-        
+
         -- Apply atmospheric performance curve
         local atmPerformance = ENGINE_CONSTANTS.ATMOSPHERE_CURVE[1]
         for density, performance in pairs(ENGINE_CONSTANTS.ATMOSPHERE_CURVE) do
@@ -63,27 +66,32 @@ function LaunchMechanics.new(rocket)
                 break
             end
         end
-        
+
         -- Apply throttle and temperature effects
         local tempEffect = 1 - math.max(0, (self.engineTemp - ENGINE_CONSTANTS.MAX_TEMPERATURE) / 500)
         return baseThrust * atmPerformance * self.throttle * tempEffect
     end
-    
+
     function self:updateEngineTemperature(dt)
         -- Temperature increases with thrust
         local heatGeneration = self.throttle * 100 -- Kelvin per second at full throttle
         self.engineTemp = self.engineTemp + (heatGeneration * dt)
-        
+
         -- Cooling effect
         local cooling = ENGINE_CONSTANTS.COOLING_RATE * dt
         self.engineTemp = math.max(293, self.engineTemp - cooling)
-        
+
         -- Check for engine failure
         if self.engineTemp > ENGINE_CONSTANTS.MAX_TEMPERATURE then
             self:handleEngineFailure()
         end
+
+        -- Fire temperature warning event if close to critical
+        if self.engineTemp > ENGINE_CONSTANTS.MAX_TEMPERATURE * 0.8 then
+            Events.TemperatureWarning:FireServer(self.engineTemp)
+        end
     end
-    
+
     function self:handleEngineFailure()
         -- Create explosion effect
         local explosion = Instance.new("Explosion")
@@ -91,32 +99,33 @@ function LaunchMechanics.new(rocket)
         explosion.BlastRadius = 10
         explosion.BlastPressure = 500000
         explosion.Parent = workspace
-        
+
         -- Disable engines
         self.throttle = 0
-        
-        -- Notify mission control
-        if game:GetService("ReplicatedStorage"):FindFirstChild("Events") then
-            game:GetService("ReplicatedStorage").Events.EngineFailure:FireServer()
-        end
+
+        -- Notify mission control of failure
+        Events.EngineFailure:FireServer()
     end
-    
+
     function self:activateStage()
         local stage = self.stages[self.currentStage]
         if not stage then return end
-        
+
+        -- Fire stage activation event
+        Events.StageActivated:FireServer(self.currentStage)
+
         -- Activate engines
         for _, engine in ipairs(stage.engines) do
             engine.CanCollide = true
             engine.Anchored = false
         end
-        
+
         -- Decouple previous stage if it exists
         if self.currentStage > 1 and self.stages[self.currentStage - 1] then
             for _, decoupler in ipairs(self.stages[self.currentStage - 1].decouplers) do
                 local force = decoupler.Configuration.decoupleForce.Value
                 local direction = decoupler.CFrame.LookVector
-                
+
                 -- Apply decouple force
                 for _, part in ipairs(self.stages[self.currentStage - 1].engines) do
                     part.Velocity = part.Velocity + direction * force
@@ -129,16 +138,27 @@ function LaunchMechanics.new(rocket)
                 end
             end
         end
-        
+
         self.currentStage = self.currentStage + 1
     end
-    
+
     -- Update loop
     game:GetService("RunService").Heartbeat:Connect(function(dt)
         if self.throttle > 0 then
             local altitude = self.rocket.parts[1].Position.Y
             local atmosphericDensity = self:calculateAtmosphericDensity(altitude)
-            
+
+            -- Fire fuel update event periodically
+            if tick() % 1 < dt then -- Update every second
+                local totalFuel = 0
+                for _, stage in pairs(self.stages) do
+                    for _, tank in ipairs(stage.fuelTanks) do
+                        totalFuel = totalFuel + tank.Configuration.fuelCapacity.Value
+                    end
+                end
+                Events.FuelUpdated:FireServer(totalFuel)
+            end
+
             -- Update each active engine
             for stageNum = 1, self.currentStage do
                 local stage = self.stages[stageNum]
@@ -150,11 +170,11 @@ function LaunchMechanics.new(rocket)
                     end
                 end
             end
-            
+
             self:updateEngineTemperature(dt)
         end
     end)
-    
+
     return self
 end
 

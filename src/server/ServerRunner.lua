@@ -10,25 +10,50 @@ local EnvironmentalHazards = require(ReplicatedStorage.Modules.Environment.Envir
 local WeatherSystem = require(ReplicatedStorage.Modules.Environment.WeatherSystem)
 
 function ServerRunner.initialize()
+    print("Starting server initialization...")
+
     -- Initialize core systems
-    KerbinGravity.initialize()
-    local hazards = EnvironmentalHazards.new()
-    local weather = WeatherSystem.new("Kerbin")
+    local success, err = pcall(function()
+        print("Initializing KerbinGravity system...")
+        KerbinGravity.initialize()
+
+        print("Creating EnvironmentalHazards system...")
+        local hazards = EnvironmentalHazards.new()
+
+        print("Creating WeatherSystem for Kerbin...")
+        local weather = WeatherSystem.new("Kerbin")
+
+        -- Store references to prevent garbage collection
+        ServerRunner.systems = {
+            hazards = hazards,
+            weather = weather
+        }
+    end)
+
+    if not success then
+        warn("Error during system initialization:", err)
+        return
+    end
 
     -- Create periodic task for autosaving and state management
     local lastUpdate = tick()
     RunService.Heartbeat:Connect(function()
         local currentTime = tick()
         if currentTime - lastUpdate >= 30 then -- Run every 30 seconds
-            -- Perform state saving or any periodic tasks here
-            lastUpdate = currentTime
-
-            -- Execute GitHub sync process using os.execute
+            -- Execute Git sync process
             if RunService:IsStudio() then
+                print("Attempting Git sync...")
                 pcall(function()
-                    os.execute("git add . && git commit -m 'Auto-sync: Game state update' && git push")
+                    -- Use os.execute for Git operations
+                    local result = os.execute("git add . && git commit -m 'Auto-sync: Game state update' && git push")
+                    if result then
+                        print("Git sync successful")
+                    else
+                        warn("Git sync failed")
+                    end
                 end)
             end
+            lastUpdate = currentTime
         end
     end)
 
